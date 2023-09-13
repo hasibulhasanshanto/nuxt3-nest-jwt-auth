@@ -7,5 +7,17 @@ export default defineNuxtConfig({
       autoprefixer: {},
     },
   },
+  modules: [
+    // ...
+    [
+      '@pinia/nuxt',
+      {
+        autoImports: [
+          // automatically imports `defineStore`
+          'defineStore',
+        ],
+      },
+    ],
+  ],
   devtools: { enabled: true },
 })

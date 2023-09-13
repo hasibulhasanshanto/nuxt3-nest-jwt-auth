@@ -1,5 +1,15 @@
 <script setup lang="ts">
-const isAuthenticated = ref<boolean>(false);
+import { storeToRefs } from "pinia";
+import { useAuthStore } from "~/store/auth";
+
+const router = useRouter();
+const { logUserOut } = useAuthStore();
+const { authenticated } = storeToRefs(useAuthStore()); // make authenticated state reactive
+
+const logoutHandler = () => {
+  logUserOut();
+  router.push("/login");
+};
 </script>
 
 <template>
@@ -15,7 +25,7 @@ const isAuthenticated = ref<boolean>(false);
             </NuxtLink>
 
             <div
-              v-if="!isAuthenticated"
+              v-if="!authenticated"
               class="hidden md:flex justify-around space-x-4"
             >
               <NuxtLink class="hover:text-indigo-600 text-gray-700" to="/"
@@ -39,17 +49,30 @@ const isAuthenticated = ref<boolean>(false);
               <NuxtLink
                 class="hover:text-indigo-600 text-gray-700"
                 to="/contact"
-                >Dashbaord</NuxtLink
+                >Dashboard</NuxtLink
               >
             </div>
           </div>
           <div class="flex space-x-4 items-center">
-            <NuxtLink class="text-gray-800 text-sm" to="/login">LOGIN</NuxtLink>
             <NuxtLink
+              v-if="!authenticated"
+              class="text-gray-800 text-sm"
+              to="/login"
+              >LOGIN</NuxtLink
+            >
+            <NuxtLink
+              v-if="!authenticated"
               class="bg-indigo-600 px-4 py-2 rounded text-white hover:bg-indigo-500 text-sm"
               to="/register"
               >SIGNUP</NuxtLink
             >
+            <button
+              v-if="authenticated"
+              @click="logoutHandler"
+              class="bg-indigo-600 px-4 py-2 rounded text-white hover:bg-indigo-500 text-sm"
+            >
+              Logout
+            </button>
           </div>
         </div>
       </div>
