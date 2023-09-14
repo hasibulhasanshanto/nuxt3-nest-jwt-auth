@@ -33,7 +33,7 @@ export const useAuthStore = defineStore("auth", {
         });
       }
       //this.loading = pending;
-      if (data.value) {
+      if (data?.value?.accessToken) {
         const token = useCookie("sb_token"); // useCookie new hook in nuxt 3
         if (process.client) {
           localStorage.setItem("user", JSON.stringify(data?.value?.user));
