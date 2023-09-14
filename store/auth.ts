@@ -9,7 +9,7 @@ export const useAuthStore = defineStore("auth", {
   state: () => ({
     authenticated: false,
     loading: false,
-    user: typeof window !== 'undefined' ? localStorage.getItem('user') : null,
+    user: typeof window !== "undefined" ? localStorage.getItem("user") : null,
   }),
 
   actions: {
@@ -32,23 +32,26 @@ export const useAuthStore = defineStore("auth", {
           statusMessage: "Unauthenticated",
         });
       }
-
-      //   this.loading = pending;
+      //this.loading = pending;
       if (data.value) {
         const token = useCookie("sb_token"); // useCookie new hook in nuxt 3
-        token.value = data?.value?.accessToken; // set token to cookie
         if (process.client) {
-          localStorage.setItem('user', JSON.stringify(data?.value?.email));
-          localStorage.setItem('sb_token', JSON.stringify(data?.value?.accessToken));
+          localStorage.setItem("user", JSON.stringify(data?.value?.user));
+          localStorage.setItem(
+            "sb_token",
+            JSON.stringify(data?.value?.accessToken)
+          );
+          token.value = localStorage.getItem("sb_token") ?? null; // set token to cookie
         }
         this.authenticated = true;
       }
+      //this.loading = false;
     },
     logUserOut() {
       const token = useCookie("sb_token");
       if (process.client) {
-        localStorage.removeItem('user');
-        localStorage.removeItem('sb_token');
+        localStorage.removeItem("user");
+        localStorage.removeItem("sb_token");
       }
       this.authenticated = false;
       token.value = null;
