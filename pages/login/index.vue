@@ -7,14 +7,14 @@ const { authenticateUser } = useAuthStore(); // use auth store
 const { authenticated } = storeToRefs(useAuthStore()); // make authenticated state 
 
 const loginDataParams = ref({
-    email: 'shanto@app.com',
-    password: '123456'
+    email: 'kam@jatri.co',
+    password: '11112222'
 })
 
 const loginHandler = async() => {
-    await authenticateUser(loginDataParams.value);
+  await authenticateUser(loginDataParams.value);
   // redirect to homepage if user is authenticated
-  if (authenticated) {
+  if (authenticated.value) { 
     router.push('/dashboard');
   } 
 }

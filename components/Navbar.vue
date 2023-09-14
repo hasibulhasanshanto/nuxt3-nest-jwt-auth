@@ -45,11 +45,17 @@ const logoutHandler = () => {
                 >Contact</NuxtLink
               >
             </div>
+            
             <div v-else class="hidden md:flex justify-around space-x-4">
               <NuxtLink
                 class="hover:text-indigo-600 text-gray-700"
-                to="/contact"
+                to="/dashboard"
                 >Dashboard</NuxtLink
+              >
+              <NuxtLink
+                class="hover:text-indigo-600 text-gray-700"
+                to="/dashboard/profile"
+                >Profile</NuxtLink
               >
             </div>
           </div>
